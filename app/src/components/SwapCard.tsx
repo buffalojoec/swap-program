@@ -7,6 +7,7 @@ import {
 } from '@solana/spl-token'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { PublicKey } from '@solana/web3.js'
+import { set } from 'date-fns'
 import { useCallback, useEffect, useState } from 'react'
 import { TbArrowsLeftRight } from 'react-icons/tb'
 
@@ -112,6 +113,7 @@ const SwapCard: React.FC<TokenSwapProps> = ({ assets }) => {
                             )
                             if (selectedAsset) {
                                 setFromToken(selectedAsset)
+                                setAmount(0)
                             }
                         }}
                         className="p-3 rounded-md border mx-2 bg-black text-white"
@@ -163,6 +165,7 @@ const SwapCard: React.FC<TokenSwapProps> = ({ assets }) => {
                                 id="pay"
                                 className="bg-black rounded-lg p-2"
                                 placeholder="Amount"
+                                value={amount / 10 ** fromToken.decimals}
                                 type="number"
                                 onChange={(e) =>
                                     setAmount(
