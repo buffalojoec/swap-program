@@ -7,7 +7,7 @@ import {
 } from '@solana/spl-token'
 import { useWallet } from '@solana/wallet-adapter-react'
 import { PublicKey } from '@solana/web3.js'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { TbArrowsLeftRight } from 'react-icons/tb'
 
 interface Asset {
@@ -33,18 +33,28 @@ const SwapCard: React.FC<TokenSwapProps> = ({ assets }) => {
     const [receiveAmount, setReceiveAmount] = useState(0)
     const wallet = useWallet()
 
-    useEffect(() => {
-        // Calculate the receive amount based on the constant product formula
+    const calculateReceiveAmount = useCallback(() => {
         const r = (toToken.balance * amount) / (fromToken.balance + amount)
         const adjustedR = r / Math.pow(10, toToken.decimals)
-        const roundedR = Math.round(adjustedR * 100) / 100
+        const roundedR = Number(adjustedR.toFixed(toToken.decimals))
         setReceiveAmount(roundedR)
     }, [amount, fromToken, toToken])
 
-    const handleFlop = () => {
+    useEffect(() => {
+        calculateReceiveAmount()
+    }, [amount, calculateReceiveAmount])
+
+    const handleFlop = useCallback(() => {
+        const adjustedAmount = amount * 10 ** fromToken.decimals
+        const adjustedReceiveAmount = receiveAmount * 10 ** toToken.decimals
+
+        setAmount(adjustedReceiveAmount)
+        setReceiveAmount(adjustedAmount)
+
         setFromToken(toToken)
         setToToken(fromToken)
-    }
+        calculateReceiveAmount()
+    }, [amount, fromToken, receiveAmount, toToken, calculateReceiveAmount])
 
     const swap = async () => {
         if (wallet.publicKey) {
