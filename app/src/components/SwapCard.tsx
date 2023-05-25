@@ -181,7 +181,7 @@ const SwapCard: React.FC<TokenSwapProps> = ({ assets }) => {
                                 id="receive"
                                 className="bg-green-950 text-white rounded-lg p-2"
                             >
-                                {receiveAmount}
+                                {receiveAmount.toFixed(2)}
                             </div>
                         </div>
                     </div>
