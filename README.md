@@ -47,9 +47,10 @@ This repository is broken up as follows:
 
 If you're following this workshop **on your own**:
 
-1. Run `upload-json.test.ts` to upload the images to Arweave's devnet, where they will be available to create token metadata
-2. Run `create-assets.test.ts` to create SPL tokens for each asset and mint them to your local keypair
-3. Run `main.test.ts` to test the swap program:
+1. In a _separate terminal_, start a local validator with `solana-test-validator`. We have multiple tests scripts, so `anchor test` will not work. We must use `anchor run test`.
+2. Run `upload-json.test.ts` to upload the images to Arweave's devnet, where they will be available to create token metadata
+3. Run `create-assets.test.ts` to create SPL tokens for each asset and mint them to your local keypair
+4. Run `main.test.ts` to test the swap program:
     - First this test will fund the Liquidity Pool from your local keypair's minted assets
     - Then it will attempt to load the Liquidity Pool's holdings
     - Lastly, it will run several test swaps on the pool using your local keypair
@@ -57,12 +58,13 @@ If you're following this workshop **on your own**:
 
 If you're following this workshop **in an existing bootcamp**:
 
-1. You will have to request assets be airdropped to your wallet from a bootcamp administrator
+1. In a _separate terminal_, start a local validator with `solana-test-validator`. We have multiple tests scripts, so `anchor test` will not work. We must use `anchor run test`.
+2. You will have to request assets be airdropped to your wallet from a bootcamp administrator
     - This is for testing the swap program and for funding your swap program's Liquidity Pool after deployment
     - The mint addresses of each asset are fixed for the bootcamp, so creating your own with `create-assets.test.ts` will create new assets only compatible with your swap program and not with the rest of the bootcamp
-2. Deploy your swap program
-3. Request your swap program be funded
-4. You will start with only Gold as an asset, and you can begin swapping for other assets once the pool is funded
+3. Deploy your swap program
+4. Request your swap program be funded
+5. You will start with only Gold as an asset, and you can begin swapping for other assets once the pool is funded
 
 ---
 
